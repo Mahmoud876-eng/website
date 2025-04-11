@@ -13,29 +13,35 @@
     <h1>register</h1>
   </header>
 
-  <!-- Login Form -->
-  <div class="container">
-    <h2>Login</h2>
-    <form action="/interface" method="GET">
-        <label for="mail">Email:</label>
-        <input type="email"  autofocus  id="mail" name="mail" required />
-        <label for="name">Username:</label>
-        <input type="text" id="name" name="username" required />
-        <label for="statues">statues</label>
-        <select id="statues" name="statues">
-          <option value="caregiver">caregiver</option>
-          <option value="cherish">the one we cherish the most</option>
-        </select>
+  <form action="/login" method="post" class="container">
+    <h2>register</h2>
+    <label for="mail">Email:</label>
+    <input type="email"  autofocus  id="mail" name="mail" required />
+    <label for="name">Username:</label>
+    <input type=S"text" id="name" name="username" required />
+    <label for="s
+    tatues">statues</label>
+    <select id="statues" name="statues">
+      <option value="caregiver">caregiver</option>
+      <option value="cherish">the one we cherish the most</option>
+    </select>
+    
+
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" required />
+
+    <button type="submit">Login</button>
+  </form>
+
+    
+      <!-- Login Form -->
         
+        
+ 
+  
 
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required />
-
-        <button type="submit">Login</button>
-    </form>
-  </div>
 
   <!-- Medication Entry Form -->
-  </div>
+  
 </body>
 </html>
