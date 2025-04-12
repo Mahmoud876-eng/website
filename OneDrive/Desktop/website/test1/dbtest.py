@@ -55,8 +55,18 @@ else:
     #print("No user found with ID 1.")
    # Retrieve and print the document with both ID and username
    user_with_id_and_name = users_collection.find_one({"_id": inserted_user.inserted_id, "name": "John Doe"})
-   if user_with_id_and_name:
-      print("Retrieved Document:", user_with_id_and_name)
+  # if user_with_id_and_name:
+   #   print("Retrieved Document:", user_with_id_and_name)
+ #  else:
+  #    print("No document found with the specified ID and username.")
+      # Delete a document from the collection
+   delete_result = users_collection.delete_one({"email": "mahmoudmalek2004@gmail.com"})
+   if delete_result.deleted_count > 0:
+      print("Document with email 'mahmoudmalek2004@gmail.com' has been deleted.")
    else:
-      print("No document found with the specified ID and username.")
-
+      print("No document found with the specified email.")
+   delete_result = users_collection.delete_one({"email": "johndoe@example.com"})
+   if delete_result.deleted_count > 0:
+      print("Document with email 'johndoe@example.com' has been deleted.")
+   else:
+      print("No document found with the specified email.")
