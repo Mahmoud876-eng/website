@@ -1,6 +1,7 @@
 from pymongo import MongoClient
 from pymongo.server_api import ServerApi
-uri = "mongodb+srv://mahmoudmalek2004:ianDQZpjFlr9QctF@cluster0.f4icykw.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+import variable
+uri = variable.password 
 # Connect to MongoDB server
 client = MongoClient(uri, server_api=ServerApi('1'))
 
@@ -13,19 +14,49 @@ users_collection = db["users"]
 # Example user data
 
 # Insert user data into the collection
+# Insert user data into the collection with auto-generated ObjectId
 
 # Retrieve and print all inserted data
-all_users = users_collection.find()
-#for user in all_users:
-
 #    print(f"Inserted User: {user}")
-user_with_id_1 = users_collection.find_one({"username": "example_user"})
-if user_with_id_1 and 'email' in user_with_id_1:
-    print(f"Email: {user_with_id_1['email']}")
+# Check if the email exists in the database
+# Insert example user data
+user_data = {"name": "John Doe", "email": "johndoe@example.com"}
+inserted_user = users_collection.insert_one(user_data)
+
+# Print the ID of the inserted user
+print(f"Inserted User ID: {inserted_user.inserted_id}")
+
+
+# Update the user data in the collection, including changing the email and deleting the name
+updated_data = {"$set": {"email": "great@mail.com"}, "$unset": {"name": ""}}
+
+# Check if the email exists in the database
+existing_user = users_collection.find_one({"email": "nice@mail.com"})
+
+if existing_user:
+   print("Old Data:", existing_user)
+   # Update the user data in the collection
+   update_result = users_collection.update_one({"email": "nice@mail.com"}, updated_data)
+   if update_result.modified_count > 0:
+      updated_user = users_collection.find_one({"email": "nice@mail.com"})
+      print("New Data:", updated_user)
+      print("User data updated successfully.")
+      # Return the updated user's name
+      if "name" in updated_user:
+         print("Updated User Name:", updated_user["name"])
+      else:
+         print("Name field has been deleted.")
+   else:
+      print("User data was not updated.")
 else:
-    print("No user found with the username 'example_user' or email not available.")
-if user_with_id_1:
-    print(f"User with ID 1: {user_with_id_1}")
-else:
-    print("No user found with ID 1.")
+   print("No matching user found with the specified email.")
+   # print(f"User with ID 1: {user_with_id_1}")
+#else:
+    #print("No user found with ID 1.")
+   # Retrieve and print the document with both ID and username
+   user_with_id_and_name = users_collection.find_one({"_id": inserted_user.inserted_id, "name": "John Doe"})
+   if user_with_id_and_name:
+      print("Retrieved Document:", user_with_id_and_name)
+   else:
+      print("No document found with the specified ID and username.")
 
