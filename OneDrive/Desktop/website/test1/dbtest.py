@@ -1,4 +1,4 @@
-from pymongo import MongoClient
+from pymongo import MongoClient , DESCENDING
 from pymongo.server_api import ServerApi
 import variable
 uri = variable.password 
@@ -10,7 +10,8 @@ db = client["user_database"]
 
 # Create a collection
 users_collection = db["users"]
-
+medecines_collection = db["medicines"]
+'''''''''
 # Example user data
 
 # Insert user data into the collection
@@ -60,13 +61,14 @@ else:
  #  else:
   #    print("No document found with the specified ID and username.")
       # Delete a document from the collection
-   delete_result = users_collection.delete_one({"email": "mahmoudmalek2004@gmail.com"})
-   if delete_result.deleted_count > 0:
-      print("Document with email 'mahmoudmalek2004@gmail.com' has been deleted.")
-   else:
-      print("No document found with the specified email.")
-   delete_result = users_collection.delete_one({"email": "johndoe@example.com"})
-   if delete_result.deleted_count > 0:
-      print("Document with email 'johndoe@example.com' has been deleted.")
-   else:
-      print("No document found with the specified email.")
+  # delete_result = users_collection.delete_one({"email": "mahmoudmalek2004@gmail.com"})
+   delete_result=0
+   '''''
+   # Retrieve the last document added to the medecines collection
+
+# Retrieve the last document added to the medecines collection
+last_doc = medecines_collection.find_one(sort=[("_id", DESCENDING)])
+if last_doc:
+   print("Last Document Added:", last_doc)
+else:
+   print("No documents found in the medecines collection.")

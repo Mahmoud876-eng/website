@@ -12,12 +12,12 @@
         <div class="nav-links">
             <div class="button-row">
                 <form action="/">
-                    <button type="submit" class="btnless">Home</button>
+                    <button type="submit" class="btnless">doctor {{username}} </button>
                 </form>
-                <form action="/dashboard">
+                <form action="/doctor">
                     <button type="submit" class="btnless">Dashboard</button>
                 </form>
-                <form action="/logout" method="POST">
+                <form action="/logout" >
                     <button type="submit" class="btnless">Logout</button>
                 </form>
             </div>
@@ -26,7 +26,7 @@
     
     <!-- Hero Section -->
     <header>
-        <h1>Welcome back, {{ username }} 👋</h1>
+        <h1>Welcome doctor , {{ username }} </h1>
         <p>We’re here to help you manage your patients’ care efficiently.</p>
         <form action="/doctor">
             <button type="submit" class="btn">Go to Dashboard</button>
@@ -54,12 +54,12 @@
 
     <!-- Features Section -->
     <section class="section">
-        <h2>Your Tools</h2>
+        <h2>Your Features</h2>
         <div class="features">
             <div class="feature-card button-card">
-                <form action="/doctor">
+                <form action="/insert">
                     <button>
-                        <h3>Medication Management</h3>
+                        <h3>add a medication</h3>
                         <p>Track and update medication schedules for your patients with ease.</p>
                     </button>
                 </form>
@@ -78,6 +78,15 @@
                         <h3>manage a patient</h3>
                         <p>Access real-time updates and patient care schedules at a glance.</p>
                     </button>
+                </form>
+            <div class="feature-card button-card">
+                <form action="/update"> <!-- it give me /register/patient-->
+                      <button>
+                        <h3>update a medication</h3>
+                        <p>Access real-time updates and patient care schedules at a glance.</p>
+                      </button>
+                </form>
+           </div>
                                 
             </div>        
     </section>

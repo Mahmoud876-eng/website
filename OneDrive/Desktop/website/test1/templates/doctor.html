@@ -9,7 +9,9 @@
 
   <div class="dashboard-container">
     <div class="logout">
-      <a href="login.html">Logout</a>
+      <form action="/logout">
+        <button type="submit">logout</button>
+      </form>
     </div>
 
     <h1>Doctor Dashboard</h1>
@@ -24,7 +26,7 @@
               <strong>Date</strong>{{patient.date}}<br>
               <strong>phone</strong>{{patient.phone}}<br>
               <p><strong>reason:</strong> {{patient.notes}} </p>
-              <a class="btn" href="#">View</a>
+              
             </div>
           
         {% endfor %}
@@ -45,7 +47,7 @@
             <p><strong>phone</strong>{{patient.phone}}<br></p>
           
             <div class="button-row">
-              <form action="/files">
+              <form action="/files" >
                   <button type="submit" class="btn">Files</button>
               </form>
               <form action="/history">

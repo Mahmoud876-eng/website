@@ -8,13 +8,16 @@
 </head>
 <body>
     <header>
-        <h1>insert your meds</h1>
+        <h1>update your meds</h1>
       </header>
       <div class="container">
         <h2> manage Medication</h2>
-        <form action="/update"  >
-          <label for="medname">Medication Name:</label>
-          <input type="text" id="medname" name="medname" required />
+
+        <form action="/update"  method="post">
+          <label for="patient">patient</label>
+          <input type="text" id="patient" name="patient" required />
+          <label for="med_name">Medication Name:</label>
+          <input type="text" id="med_name" name="med_name" required />
     
           <label for="photo">new img of Medication:</label>
           <input type="file" id="photo" name="photo" accept="image/*" />

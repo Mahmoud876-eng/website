@@ -204,4 +204,37 @@
     gap: 10px;  /* Space between buttons */
     margin-bottom: 15px;  /* Space below button row */
     }
+    .feature-card.button-card {
+      background-color: white;
+      
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.3s;
+  }
+  
+  .feature-card.button-card:hover {
+      background-color: #135ba1;
+  }
+  
+  .feature-card.button-card h3,
+  .feature-card.button-card p {
+      color: black;
+  }
+  /* Ensure the form and button take up the whole card */
+  .feature-card.button-card form,
+          .feature-card.button-card button {
+              width: 100%;
+              height: 100%;
+              background: none;
+              border: none;
+              padding: 0;
+              margin: 0;
+              cursor: pointer;
+          }
+  
+          .feature-card.button-card button {
+              display: block;
+              text-align: center;
+          }
+  
   

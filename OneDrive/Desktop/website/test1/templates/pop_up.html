@@ -9,14 +9,17 @@
 <body>
 
 <!-- Button to open the modal -->
-<button class="open-btn" onclick="openModal()">Open Stylish Popup</button>
+ <form action="/home" type="POST">
+  <button class="open-btn" onclick="openModal()">Open Stylish Popup</button>
+
+ </form>
 
 <!-- Modal -->
 <div id="popupModal" class="modal">
   <div class="modal-content">
     <span class="close-btn" onclick="closeModal()">&times;</span>
     <h2>Welcome!</h2>
-    <p>This is a more stylish and robust modal popup with a blue color theme.</p>
+    <p>{{message}} {{number}} </p>
     <button class="modal-button" onclick="closeModal()">Got it!</button>
   </div>
 </div>
