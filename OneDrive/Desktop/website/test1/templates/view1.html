@@ -16,34 +16,35 @@
 
     <!-- Section: Patients List -->
     <div class="section">
-      <h2>medication of {{name}} </h2>
       
-        {% for medecine in medecines %}
+       {% for patient in patients %}
+          <h2>medication of {{patient.name}} </h2>        
+          {% for medecine in medecines %}
+            {%if patient.name == medecine.patient:%}          
+              <div class="card">
+                <strong>medecine name:</strong> {{medecine.med_name}}<br>      
+                <strong>time:</strong>{{medecine.time}}</medecine></br>
+                <strong>rest:</strong>{{medecine.rest}}<br>        
+                <p><strong>notes</strong>{{medecine.notes}}<br></p>
           
-          <div class="card">
-            <strong>medecine name:</strong> {{medecine.med_name}}<br>      
-            <strong>time:</strong>{{medecine.time}}</medecine></br>
-            <strong>rest:</strong>{{medecine.rest}}<br>        
-            <p><strong>notes</strong>{{medecine.notes}}<br></p>
-          
-            <div class="button-row">
-              <form action="/insert">
-                  <button type="submit" class="btn">insert</button>
-              </form>
-              <form action="/delete">
-                 <button type="submit" class="btn">delete</button>
-              </form>
-              <form action="/update">
-                  <button type="submit" class="btn">update</button>
-              </form>
-            </div>  
+                <div class="button-row">
+                  <form action="/insert">
+                      <button type="submit" class="btn">insert</button>
+                  </form>
+                  <form action="/delete">
+                     <button type="submit" class="btn">delete</button>
+                  </form>
+                  <form action="/update">
+                      <button type="submit" class="btn">update</button>
+                  </form>
+                </div>  
           
      
-          </div>
-            
+              </div>
+            {% endif %}
           
+           {% endfor %}
         {% endfor %}
-        
         
     </div>     
 

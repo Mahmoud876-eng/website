@@ -28,7 +28,7 @@ id_collection= db["id"]
 
 
 
-@app.route('/'
+@app.route('/')
 def index():
     status= session.get("status")
     if status == "doctor":
@@ -37,7 +37,7 @@ def index():
         return render_template("home_user.html")
     else:
         return render_template('index.html')
-@app.route("/register", methods=["POST","GET"] )#connect the test1.py and the flask here
+@app.route("/register", methods=["POST","GET"] )#connect the test1.py and the flask here got an error when u click the button in the middle
 def register():
     print(request.method)
     
@@ -80,7 +80,7 @@ def register():
         
          
     return render_template("register.html")
-@app.route("/register/patient", methods=["POST","GET"] )#the connection of the two persona need to work on it more and if there will be an error it will be here
+@app.route("/register/patient", methods=["POST","GET"] )
 def register_paient():
     id= session.get("user_id")
     status= session.get("status")
@@ -91,26 +91,42 @@ def register_paient():
         date= request.form.get("date")
         phone= request.form.get("contact")
         notes= request.form.get("notes")
-        patient_with_phone= patient_collection.find_one({ "phone": phone})
-        if patient_with_phone:
-            if status == "doctor":         
+        #patient_with_phone= patient_collection.find_one({ "phone": phone})
+        #if patient_with_phone:
+        #    if status == "doctor":         
+         #       print("patient with phone already exists")  
+          #      print(patient_with_phone)
+           #     updated_data = {"$set": {"dr_id": id}}
+            #    update_result = patient_collection.update_one({"phone": phone}, updated_data) 
+             #   print(update_result)
+              #  return render_template("home_doctor.html")
+        #    else:
+         #       print("patient already exists")
+          #      updated_data = {"$set": {"user_id": id}}
+           #     update_result = patient_collection.update_one({"phone": phone}, updated_data)
+            #    print(update_result)
+            #   return render_template("home_user.html")
+        id_with_phone= id_collection.find_one({ "number": phone})
+        print(id_with_phone)
+        if id_with_phone:
+            if status == "doctor":
                 print("patient with phone already exists")  
-                print(patient_with_phone)
+                print(id_with_phone)
                 updated_data = {"$set": {"dr_id": id}}
-                update_result = medecine_collection.update_one({"phone": phone}, updated_data) 
+                update_result = id_collection.update_one({"number": phone}, updated_data) 
                 print(update_result)
                 return render_template("home_doctor.html")
             else:
                 print("patient already exists")
                 updated_data = {"$set": {"user_id": id}}
-                update_result = medecine_collection.update_one({"phone": phone}, updated_data)
+                update_result = id_collection.update_one({"number": phone}, updated_data)
                 print(update_result)
                 return render_template("home_user.html")
-
+        print("great")
         if status == "doctor":
             patient_data = {
-                "dr_id": id,
-                "user_id": "",
+               # "dr_id": id,
+                #"user_id": "",
                 "name": name,
                 "age": age,
                "gender": gender,
@@ -119,11 +135,11 @@ def register_paient():
                 "notes": notes
             }
             inserted_patient = patient_collection.insert_one(patient_data)
-            return render_template("home_doctor.html")
+           
         elif status == "user":
             patient_data = {
-                "dr_id": "",
-                "user_id":id,
+             #   "dr_id": "",
+             #   "user_id":id,
                 "name": name,
                 "age": age,
                "gender": gender,
@@ -132,24 +148,25 @@ def register_paient():
                 "notes": notes
             }
             inserted_patient = patient_collection.insert_one(patient_data)
-            return render_template("home_user.html")
+           
 
-        #if status == "doctor":    
-        #    id_data = {
-        #        "bot_id": "" ,
-        #        "doctor_id": id,
-        #        "patient_id": ""
-        #    }
-        #    inserted_id = id_collection.insert_one(id_data)
-        #    return render_template("home_doctor.html")
-        #else:
-        #    id_data = {
-        #        "bot_id": "",
-        #        "doctor_id": id,
-        #        "patient_id": ""
-        #    }
-        #    inserted_id = id_collection.insert_one(id_data)
-        #    return render_template("home_user.html")
+        if status == "doctor":    
+            id_data = {
+                "number": phone, 
+                "dr_id": id,
+                "user_id": ""
+            }
+            inserted_id = id_collection.insert_one(id_data)
+            return render_template("home_doctor.html")
+        else:
+            id_data = {
+                "number": phone,
+                "dr_id": "",
+                "user_id": id
+            }
+            inserted_id = id_collection.insert_one(id_data)
+            return render_template("home_user.html")
+        return render_template("error.html", message="missing data")
         
     return render_template("patient1.html")
 @app.route("/login", methods=["POST","GET"] )
@@ -193,15 +210,38 @@ def login():
             return render_template("error.html", message="mail not found")     
     return render_template("login.html")
 
-@app.route("/doctor", methods=["POST","GET"] )#it give me all the patient of all the docotors
+@app.route("/doctor", methods=["POST","GET"] )
 def doctor():
-    patients = list(patient_collection.find())
+    id= session.get("user_id")
+    id_with_id = id_collection.find({ "dr_id": id })
+
+    numbers = [str(doc['number']).strip() for doc in id_with_id]
+    print(numbers)
+    
+    patient_with_number = patient_collection.find({ "phone": { "$in": numbers } })
+
+    patients = list(patient_with_number)
     return render_template("doctor.html",patients=patients)
-@app.route("/view", methods=["POST","GET"] )#it dosen t deferiniate between medication of the patient
+@app.route("/view", methods=["POST","GET"] )
 def view():
-    medecines = list(medecine_collection.find())
-    return render_template("view1.html",medecines=medecines)
-@app.route("/insert", methods=["POST","GET"] )
+    
+    id= session.get("user_id")
+    
+    id_with_id = id_collection.find({ "user_id": id })
+
+    numbers = [str(doc['number']).strip() for doc in id_with_id]
+    print(numbers)
+    
+    patient_with_number = patient_collection.find({ "phone": { "$in": numbers } })
+
+    patients = list(patient_with_number)
+    patient = [c['name'] for c in patients]
+    
+    print(patients)
+    medecines = list(medecine_collection.find({ "patient": { "$in": patient } }))
+    print(medecines)
+    return render_template("view1.html",medecines=medecines, patients=patients)
+@app.route("/insert", methods=["POST","GET"] )#it got implented into the data base butit doesn t go to the html
 def insert():
     print(request.method)
     
@@ -210,12 +250,24 @@ def insert():
         status= session.get("status")
         user_with_mail = users_collection.find_one({"-id": id})
         doctor_with_mail = doctor_collection.find_one({"-id": id})
+        patient=request.form.get("patient")
         name= request.form.get("medname") 
+        if not patient_collection.find_one({ "name": patient }):
+            return render_template("error.html", message="patient not found")
+        if status == "doctor":
+            patient_with_id= patient_collection.find_one({ "name": patient })
+            number=patient_with_id['phone']
+        elif status == "user":
+            patient_with_id= patient_collection.find_one({ "name": patient })
+            number=patient_with_id['phone']
+        
+        print(number) 
+        
         print(request.method)
         print(name)
         if not name:
             return render_template("error.html", message="missing name")
-        img=request.form.get("photo")#img I have got a prob can t put an img
+        img=request.files.get("photo")#img I have got a prob can t put an img
         time=request.form.get("time")
         if not time:#I should creat that thing to only do mornning night
             return render_template("error.html", message="function not allowed")
@@ -223,16 +275,17 @@ def insert():
         rest= request.form.get("rest")
         medine_data = {
             "id": id,
+            "patient": patient,
             "med_name": name,
             "img": img,
             "time": time,
             "notes": notes,
             "rest": rest
         }
-        insert_med = medecine_collection.insert_one(medine_data)
+        medecine_collection.insert_one(medine_data)
         if status == "doctor":
             return render_template("home_doctor.html",username=doctor_with_mail['username'])
-        else:
+        elif status == "user":
             return render_template("home_user.html",username=user_with_mail['username'])
         #elif if u want to add a rule for password
         
@@ -283,7 +336,7 @@ def update():
         
         
     return render_template("update.html")
-@app.route("/delete", methods=["POST","GET"] )
+@app.route("/delete", methods=["POST","GET"] )#have an error not sure if it s fixed pls test it
 def delete():
 
     if request.method == "POST":
@@ -308,8 +361,9 @@ def files():
     if request.method == "POST":
         name= request.form.get("medname") 
         file = request.files['file']
-        file.save(f"static/uploads/{file.filename}")
+        #file.save(f"static/uploads/{file.filename}")
         return render_template("home_doctor.html")
+    
     return render_template("files.html")
 @app.route("/logout" )
 def logout():
