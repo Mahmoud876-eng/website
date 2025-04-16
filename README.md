@@ -27,7 +27,7 @@ _Koussay Awechri
 _Amine ben naser
 _Mohamed Braiki
 ```bash
-git clone https://github.com/yourusername/yourrepo.git
-cd yourrepo
+git (https://github.com/Mahmoud876-eng/website.git)
+cd website
 
 
