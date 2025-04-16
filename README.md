@@ -22,10 +22,10 @@ This project is a **Telegram bot** that helps patients remember to take their me
 2. clone https://github.com/Mahmoud876-eng/website.git
 
 ## 🙋‍♂️ Author
-Mahmoud Malek
-Koussay Awechri
-Amine ben naser
-Mohamed Braiki
+-Mahmoud MALEK
+_Koussay Awechri
+_Amine ben naser
+_Mohamed Braiki
 ```bash
 git clone https://github.com/yourusername/yourrepo.git
 cd yourrepo
