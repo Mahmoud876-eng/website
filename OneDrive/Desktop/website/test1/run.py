@@ -1,10 +1,8 @@
 import threading
 import subprocess
-numb="55"
-id="1234567890"
 # Function to run the bot (separate process)
 def run_bot():
-    subprocess.run(["python", "send1.py",numb,id])
+    subprocess.run(["python", "send1.py"])
 
 # Function to run the Flask app (separate process)
 def run_flask():
