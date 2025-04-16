@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request , session, redirect
+from flask import Flask, render_template, request , session, redirect,jsonify
 from pymongo import MongoClient
 from pymongo.server_api import ServerApi
 from bson import ObjectId
@@ -33,36 +33,42 @@ rendezvous_collection= db["rendezvous"]
 def index():
     status= session.get("status")
     if status == "doctor":
-        return render_template("home_doctor.html")
+        username = session.get("username")
+        return render_template("home_doctor.html", username=username)
     elif status == "user":
-        return render_template("home_user.html")
+        username = session.get("username")
+        return render_template("home_user.html", username=username)
     else:
         return render_template('index.html')
 @app.route("/register", methods=["POST","GET"] )#connect the test1.py and the flask here got an error when u click the button in the middle
 def register():
-    print(request.method)
     
     if request.method == "POST":
-        mail= request.form.get("mail") 
-        user_with_mail = users_collection.find_one({"email": mail})
-        doctor_with_mail = doctor_collection.find_one({"email": mail})
-        if user_with_mail or doctor_with_mail:
-            return render_template("error.html", message="mail already exists")
-        status= request.form.get("status")
-        username=request.form.get("username")
-        
+        email= request.json.get("email") 
+        password=request.json.get("password")
+        status= request.json.get("status")
+        username=request.json.get("username")
+        if not email:
+            return jsonify({"error": "missing email"}), 400
+        if not status:
+            return jsonify({"error": "missing status"}), 400
         if not username:
-            return render_template("error.html", message="missing name")
-        password=request.form.get("password")
+            return jsonify({"error": "missing username"}), 400
         if not password:
-            return render_template("error.html", message="missing password")
+            return jsonify({"error": "missing password"}), 400
+        
+        user_with_mail = users_collection.find_one({"email": email})
+        doctor_with_mail = doctor_collection.find_one({"email": email})
+        if user_with_mail or doctor_with_mail:
+            return jsonify({"error": "email already exists"}), 400
+        
         if len(password) < 8:
-            return render_template("error.html", message="password too short")
+            return jsonify({"error": "password must be at least 8 characters"}), 400
     
         
         user_data = {
                 "username": username,
-                "email": mail,
+                "email": email,
                 "status":  status,
                 "password": password
             }
@@ -170,43 +176,40 @@ def register_paient():
         return render_template("error.html", message="missing data")
         
     return render_template("patient1.html")
-@app.route("/login", methods=["POST","GET"] )#connect them here also
+@app.route("/login", methods=["POST","GET"] )
 def login():
     print(request.method)
     if request.method == "POST":
-        mail= request.form.get("mail") 
-        print(request.method)
-        print(mail)
+        #get the data from json 
+        mail = request.json.get("email")
+        password = request.json.get("password")
 
-        print("6")
+        if not password or not mail:
+            return jsonify({"error": "Missing data"}), 400
+        
         user_with_mail = users_collection.find_one({"email": mail})
         doctor_with_mail = doctor_collection.find_one({"email": mail})
+
         if not user_with_mail and not doctor_with_mail:
-            return render_template("error.html", message="mail not found")
-        username=request.form.get("name")
+            return jsonify({"error": "Wrong Password or email"}), 400
+        
         if user_with_mail:    
-            if not user_with_mail['username'] == username:
-                return render_template("error.html", message="name not found")
-            password=request.form.get("pass")
-            if not password:
-                return render_template("error.html", message="missing password")
             if not user_with_mail['password'] == password:
-                return render_template("error.html", message="password not found")
+                return jsonify({"error": "Wrong Password or email"}), 400
             session["user_id"] = user_with_mail['_id']
             session["status"] = user_with_mail['status']
-            return render_template("home_user.html",username=user_with_mail['username']) 
-        
+            session["username"] = user_with_mail['username']
+            return jsonify({"status": "user","username": user_with_mail['username']}), 200
+            #return render_template("home_usr.html",username=user_with_mail['username'])
+
         elif doctor_with_mail:
-            if not doctor_with_mail['username'] == username:
-                return render_template("error.html", message="name not found")
-            password=request.form.get("pass")
-            if not password:
-                return render_template("error.html", message="missing password")
             if not doctor_with_mail['password'] == password:
-                return render_template("error.html", message="password not found")
+                return jsonify({"error": "Wrong Password or email"}), 400
             session["user_id"] = doctor_with_mail['_id']
             session["status"] = doctor_with_mail['status']
-            return render_template("home_doctor.html",username=doctor_with_mail['username'])
+            session["username"] = doctor_with_mail['username']
+            return jsonify({"status": "doctor","username": doctor_with_mail['username']}), 200
+            #return render_template("home_doctor.html",username=doctor_with_mail['username'])
         else:
             return render_template("error.html", message="mail not found")     
     return render_template("login.html")

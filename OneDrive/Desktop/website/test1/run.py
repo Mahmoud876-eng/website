@@ -3,6 +3,8 @@ import subprocess
 # Function to run the bot (separate process)
 def run_bot():
     subprocess.run(["python", "send1.py"])
+def run_send():
+    subprocess.run(["python", "notifications.py"])
 
 # Function to run the Flask app (separate process)
 def run_flask():
@@ -12,3 +14,4 @@ def run_flask():
 if __name__ == '__main__':
     threading.Thread(target=run_bot).start()
     threading.Thread(target=run_flask).start()
+    threading.Thread(target=run_send).start()

@@ -2,38 +2,44 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Alzheimer Care - Home</title>
+  <title>Hope - Home</title>
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/home.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/navbar.css') }}">
 </head>
 <body>
   <!-- Navbar -->
   <nav>
-    <div class="logo">Hope</div>
-    <div class="nav-links">
-      <div class="button-row" >
-        <form action="">
-          <button type="submit" class="btnless">Home</button>
-        </form>
-        <form action="/login" method="GET">
-          <button type="submit" class="btnless" name="action">login</button>
-        </form>
-        <form action="/register" method="GET">
-          <button type="submit" class="btnless" name="action">register</button>
-        </form>
+    <div class="navbar">
+      <div class="nvcontainer nav-container">
+          <input class="checkbox" type="checkbox" name="" id="" />
+          <div class="hamburger-lines">
+            <span class="line line1"></span>
+            <span class="line line2"></span>
+            <span class="line line3"></span>
+          </div>  
+        <div class="nvlogo">
+          <h1></h1>
+        </div>
+        <div class="menu-items">
+          <li><a href="/">Home Page</a></li>
+          <li><a href="#">Login</a></li>
+          <li><a href="#">Register</a></li>
+          <li><a href="#">Contact Us</a></li>
+          <li><a href="/logout">About Us</a></li>
+        </div>
       </div>
-      
     </div>
-    
   </nav>
   
   
   <!-- Hero Section -->
   <header>
+    <img src="{{ url_for('static', filename='img/care.png')}}" alt="Care image" class="logo-image">
+    <h1>Welcome to Hope</h1>
     <h1>Every Memory Matters</h1>
     <p>We help Alzheimer’s patients and caregivers manage daily care with dignity and simplicity.</p>
-    <form action="/register" method="POST">
-      <button type="submit" class="cta-button">Get Started</button>
-    </form>
+    <a href="#get-started" class="cta-button">Get Started</a>
+
   </header>
 
   <!-- Motivational Message -->
@@ -45,9 +51,9 @@
   <section class="section">
     <h2>About Our Platform</h2>
     <div class="about">
-      <img src="https://via.placeholder.com/400x300?text=Care+Support" alt="Care image">
+      <img src="static/img/dsupport.jpg" alt="Care image">
       <div class="about-text">
-        Alzheimer Care is built to support caregivers and patients in managing medications, reminders, and health updates.
+        Hope is built to support caregivers and patients in managing medications, reminders, and health updates.
         With a clean interface, alerts, and secure access for both, it's more than a tool — it's a helping hand.
       </div>
     </div>
@@ -90,12 +96,30 @@
       </div>
     </div>
   </section>
-
+  <!-- Get Started (ask if for signup or signin) -->
+   <section class="section" id="get-started">
+    <div class="get-started">
+      <h2>Get Started</h2>
+      <p>Join us in making a difference. Sign up today to access our platform and start managing care effectively.</p>
+      <a href="/register" class="cta-button">Sign Up</button>
+      <!-- already have account -->
+       <a href="/login" class="cta-button">Log in</a>
+    </div>
+   </section>
   <!-- Footer -->
   <footer>
-    &copy; 2025 Alzheimer Care | Need help? Contact us at <a href="mailto:support@alzcare.org">support@alzcare.org</a>
+    &copy; 2025 Hope | Need help? Contact us at <a href="mailto:support@alzcare.org">support@alzcare.org</a>
   </footer>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    $(document).on('click', 'a[href^="#"]', function (event) {
+        event.preventDefault();
 
+        $('html, body').animate({
+            scrollTop: $($.attr(this, 'href')).offset().top
+        }, 2500);
+    });
+  </script>
 </body>
 </html>
 
