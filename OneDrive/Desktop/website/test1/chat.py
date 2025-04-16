@@ -15,7 +15,7 @@ def home():
     if request.method == "POST":
   # Example chat ID
         # Get chat_id from session
-        chat_id = '1234567890'
+        chat_id = '67fb97cf5590a185be2d9f36'
         threading.Thread(target=run_bot, args=(chat_id,), daemon=True).start()  # Pass chat_id to run_bot
         return f"Chat ID is: {chat_id}, Numb is: 55"
     return render_template("register.html")

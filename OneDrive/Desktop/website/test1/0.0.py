@@ -1,27 +1,33 @@
-from flask import Flask, session
-import threading
-import subprocess
-from flask_session import Session
+from telegram import Bot
+from apscheduler.schedulers.background import AsyncIOScheduler ,  BackgroundScheduler
+import datetime
+import time
+import asyncio
+import variable
 
-app = Flask(__name__)
-app.config["SESSION_PERMANENT"] = False
-app.config["SESSION_TYPE"] = "filesystem"
-Session = Session(app)
-# Your Flask route
-@app.route('/')
-def home():
-    session['chat_id'] = '1234567890'  # Example chat ID
-    return f"Chat ID is: , Numb is: "
+# Replace with your bot token and the chat ID of the person
+BOT_TOKEN = variable.TOKEN  # Replace with your actual bot token
+CHAT_ID= variable.CHAT_ID  # Replace with your actual chat ID
 
-# Function to run the external bot
-def run_bot():
-    chat_id = session.get('chat_id')
-      # Clear session after getting chat_id
-    subprocess.run(["python", "send1.py", chat_id, "55"])
+async def send_message():
+    await bot.send_message(chat_id=CHAT_ID, text="⏰ Hey! It's time to take your medicine!")
 
-if __name__ == '__main__':
-    # Start the bot in a separate thread
-    threading.Thread(target=run_bot, daemon=True).start()
+bot = Bot(token=BOT_TOKEN)
+def schedule_send_message():
+    asyncio.run(send_message())
 
-    # Start the Flask app
-    app.run(debug=True, use_reloader=False)
+# Create a scheduler
+#scheduler = BackgroundScheduler()
+scheduler = AsyncIOScheduler()
+scheduler.add_job(schedule_send_message, 'cron', minute='*')
+
+scheduler.start()
+# Schedule the message (example: at 10:30 AM every day)
+print("Scheduler started. Waiting to send messages...")
+try:
+    while True:
+        time.sleep(1)
+        pass
+except (KeyboardInterrupt, SystemExit):
+    scheduler.shutdown()
+    print("Scheduler stopped.")

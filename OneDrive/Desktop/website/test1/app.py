@@ -25,6 +25,7 @@ medecine_collection= db["medicines"]
 doctor_collection= db["doctor"]
 patient_collection= db["patient"]
 id_collection= db["id"]
+rendezvous_collection= db["rendezvous"]
 
 
 
@@ -169,7 +170,7 @@ def register_paient():
         return render_template("error.html", message="missing data")
         
     return render_template("patient1.html")
-@app.route("/login", methods=["POST","GET"] )
+@app.route("/login", methods=["POST","GET"] )#connect them here also
 def login():
     print(request.method)
     if request.method == "POST":
@@ -210,18 +211,19 @@ def login():
             return render_template("error.html", message="mail not found")     
     return render_template("login.html")
 
-@app.route("/doctor", methods=["POST","GET"] )
+@app.route("/doctor", methods=["POST","GET"] )#u aded a rendez vous data base
 def doctor():
     id= session.get("user_id")
     id_with_id = id_collection.find({ "dr_id": id })
-
+    
     numbers = [str(doc['number']).strip() for doc in id_with_id]
     print(numbers)
     
     patient_with_number = patient_collection.find({ "phone": { "$in": numbers } })
-
+    rendez_with_number = rendezvous_collection.find({ "number": { "$in": numbers } })
+    rendez=list(rendez_with_number)
     patients = list(patient_with_number)
-    return render_template("doctor.html",patients=patients)
+    return render_template("doctor.html",patients=patients,rendezs=rendez)
 @app.route("/view", methods=["POST","GET"] )
 def view():
     
@@ -365,6 +367,55 @@ def files():
         return render_template("home_doctor.html")
     
     return render_template("files.html")
+@app.route("/book_rendezvous", methods=["POST","GET"] )#u haven t tested it yet
+def book_rendezvous():
+    id= session.get("user_id")
+    status= session.get("status")
+    if request.method == "POST":
+        name= request.form.get("name") 
+        number= request.form.get("Number")
+        print(number)
+        numb_with_id= id_collection.find_one({ "number": number})
+        print(numb_with_id)
+        #numb_with_id=True
+        if not numb_with_id:
+            return render_template("error.html", message="wrong data")   
+        doctor= request.form.get("doctor")
+        print(doctor)
+        doctor_with_id= doctor_collection.find_one({ "username": doctor})
+        print(doctor_with_id)
+        if not doctor_with_id:
+            return render_template("error.html", message="Doctor not found")
+
+
+        date= request.form.get("date")
+        time= request.form.get("time")
+        notes= request.form.get("notes")
+        if not name:
+            return render_template("error.html", message="missing name")
+        if not date:
+            return render_template("error.html", message="missing date")
+        if not time:
+            return render_template("error.html", message="missing time")
+        
+        rendezvous_data = {
+            "id": doctor_with_id['_id'],
+            "user_id": numb_with_id["user_id"],
+            "name": name,
+            "number": number,
+            "doctor": doctor,
+            "date": date,
+            "time": time,
+            "notes": notes        }
+        rendezvous_collection.insert_one(rendezvous_data)
+        
+        if status == "doctor":
+            return render_template("home_doctor.html",username=name)
+        elif status == "user":
+            return render_template("home_user.html",username=name)
+        
+    return render_template("rendez_vous.html")
+
 @app.route("/logout" )
 def logout():
     print(request.method)

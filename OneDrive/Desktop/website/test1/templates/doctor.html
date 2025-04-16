@@ -19,13 +19,14 @@
     <!-- Section: Upcoming Reservations -->
     <div class="section">
         <h2>Upcoming Reservations</h2>
-        {% for patient in patients %}
+        {% for rendez in rendezs %}
           
             <div class="card">
-              <strong>Patient:</strong> {{patient.name}}<br>
-              <strong>Date</strong>{{patient.date}}<br>
-              <strong>phone</strong>{{patient.phone}}<br>
-              <p><strong>reason:</strong> {{patient.notes}} </p>
+              <strong>Patient:</strong> {{rendez.name}}<br>
+              <strong>Date</strong>{{rendez.date}}<br>
+              <strong>Time</strong>{{rendez.time}}<br>
+              <strong>phone</strong>{{rendez.phone}}<br>
+              <p><strong>reason:</strong> {{rendez.notes}} </p>
               
             </div>
           
@@ -44,7 +45,11 @@
             <strong>Patient:</strong> {{patient.name}}<br>      
             <strong>Age:</strong>{{patient.age}}<br>
             <strong>Gender:</strong>{{patient.gender}}<br>        
-            <p><strong>phone</strong>{{patient.phone}}<br></p>
+            <strong>phone</strong>{{patient.phone}}<br>
+            <strong>Date</strong>{{patient.date}}<br>
+            
+            <p><strong>reason:</strong> {{patient.notes}} </p>
+              
           
             <div class="button-row">
               <form action="/files" >

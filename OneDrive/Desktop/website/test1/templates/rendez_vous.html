@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Book a Rendez-vous</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+            padding: 20px;
+        }
+        .container {
+            max-width: 500px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        button {
+            background: #28a745;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #218838;
+        }
+        h2 {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>Book a Rendez-vous</h2>
+    <form method="POST" action="/book_rendezvous">
+        <label for="name">Patient name:</label>
+        <input type="text" id="name" name="name" required>
+        <label for="Number">Number:</label>
+        <input type="text" id="Number" name="Number" required>
+        <label for="doctor">Doctor name:</label>
+        <input type="text" id="doctor_name" name="doctor" required>
+        <label for="date">Choose Date:</label>
+        <input type="date" id="date" name="date" required>
+
+        <label for="time">Choose Time:</label>
+        <input type="time" id="time" name="time" required>
+
+        <label for="notes">Additional Notes (optional):</label>
+        <textarea id="notes" name="notes" rows="4"></textarea>
+
+        <button type="submit">Book Appointment</button>
+    </form>
+</div>
+</body>
+</html>
