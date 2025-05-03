@@ -13,3 +13,5 @@ AVD*.conf
 *.keyring
 *.condarc
 emulator_console_auth_token
+venv/
+venv/
