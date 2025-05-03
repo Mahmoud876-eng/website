@@ -1,0 +1,15 @@
+variable.py
+__pycache__/
+DOS.py
+instance/
+.idea/
+.vscode/
+cert.pem
+key.pem
+.env
+*.ini
+AVD*.conf
+*.history
+*.keyring
+*.condarc
+emulator_console_auth_token

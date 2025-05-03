@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Medication</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+        
+        :root {
+            --primary: #4a90e2;
+            --primary-dark: #357abd;
+            --secondary: #8000ff;
+            --text: #2e2e2e;
+            --text-light: #757575;
+            --border: #e0e0e0;
+            --background: #f7f7f7;
+            --white: #ffffff;
+            --error: #e74c3c;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: var(--primary);
+            color: white;
+            text-align: center;
+            padding: 1.5em 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 2em auto;
+            background-color: var(--white);
+            padding: 2em;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        }
+
+        h1, h2 {
+            font-weight: 600;
+        }
+
+        h2 {
+            margin-bottom: 1.5em;
+            color: var(--text);
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 1.5em;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5em;
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 0.9em;
+            transition: border 0.3s;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
+        }
+
+        .file-input-container {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .file-input-button {
+            border: 1px dashed var(--border);
+            border-radius: 8px;
+            padding: 30px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .file-input-button:hover {
+            border-color: var(--primary);
+            background-color: rgba(74, 144, 226, 0.05);
+        }
+
+        .file-input {
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+
+        .file-name {
+            margin-top: 0.5em;
+            font-size: 0.8em;
+            color: var(--text-light);
+        }
+
+        button[type="submit"] {
+            width: 100%;
+            background-color: var(--secondary);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 1em;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 1em;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #6a00ff;
+        }
+
+        .required-field::after {
+            content: " *";
+            color: var(--error);
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                margin: 1em;
+                padding: 1.5em;
+            }
+            
+            header {
+                padding: 1em 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Update Medication</h1>
+    </header>
+    
+    <div class="container">
+        <h2>Manage Medication</h2>
+
+        <form action="/update" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="patient" >Patient Name</label>
+                <input type="text" id="patient" name="patient" required placeholder="Enter patient's full name">
+            </div>
+
+            <div class="form-group">
+                <label for="med_name" >Medication Name</label>
+                <input type="text" id="med_name" name="med_name" required placeholder="Enter medication name">
+            </div>
+
+            <div class="form-group">
+                <label for="photo">New Medication Image</label>
+                
+               
+                <input type="file" id="photo" name="photo" accept="image/*" />
+            </div>
+
+            <div class="form-group">
+                <label for="time" >Administration Time</label>
+                <select id="time" name="time" required>
+                    <option value="" disabled selected>Select time</option>
+                    <option value="morning">Morning</option>
+                    
+                    <option value="evening">Evening</option>
+                    <option value="night">Night</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="reste" >Remaining Quantity</label>
+                <input type="number" id="reste" name="reste" required min="1" placeholder="Enter remaining quantity">
+            </div>
+
+            <div class="form-group">
+                <label for="notes">Additional Notes</label>
+                <textarea id="notes" name="notes" rows="4" placeholder="Enter any special instructions"></textarea>
+            </div>
+
+            <button type="submit">Update Medication</button>
+        </form>
+    </div>
+
+    <script>
+        // Display selected file name
+        document.getElementById('photo').addEventListener('change', function(e) {
+            const fileName = e.target.files[0] ? e.target.files[0].name : 'No file selected';
+            document.getElementById('file-selected').textContent = fileName;
+        });
+
+        // Form validation
+        document.querySelector('form').addEventListener('submit', function(e) {
+            let isValid = true;
+            
+            // Check required fields
+            document.querySelectorAll('[required]').forEach(field => {
+                if (!field.value.trim()) {
+                    field.style.borderColor = 'var(--error)';
+                    isValid = false;
+                }
+            });
+
+            if (!isValid) {
+                e.preventDefault();
+                alert('Please fill in all required fields');
+            }
+        });
+
+        // Reset field styles when user starts typing
+        document.querySelectorAll('input, select, textarea').forEach(field => {
+            field.addEventListener('input', function() {
+                this.style.borderColor = '';
+            });
+        });
+    </script>
+</body>
+</html>

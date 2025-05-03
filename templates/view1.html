@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Patient Medication Dashboard</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+    
+    :root {
+      --primary: #3a7bd5;
+      --primary-dark: #2c5fb3;
+      --primary-light: #e3f2fd;
+      --danger: #e74c3c;
+      --warning: #f39c12;
+      --success: #2ecc71;
+      --text: #2c3e50;
+      --text-light: #7f8c8d;
+      --bg: #f5f7fa;
+      --card-bg: #ffffff;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+    
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      padding: 20px;
+    }
+    
+    .dashboard-container {
+      max-width: 1000px;
+      margin: 0 auto;
+      background: var(--card-bg);
+      border-radius: 12px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+      padding: 30px;
+    }
+    
+    .logout {
+      text-align: right;
+      margin-bottom: 20px;
+    }
+    
+    .logout button {
+      background-color: var(--danger);
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+    
+    .logout button:hover {
+      background-color: #c0392b;
+    }
+    
+    .section {
+      margin-bottom: 30px;
+    }
+    
+    .patient-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: var(--primary);
+      color: white;
+      padding: 15px 20px;
+      border-radius: 8px;
+      margin-bottom: 15px;
+    }
+    
+    .patient-header h2 {
+      margin: 0;
+      font-weight: 600;
+    }
+    
+    .patient-actions {
+      display: flex;
+      gap: 10px;
+    }
+    
+    .medication-card {
+      background-color: var(--card-bg);
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      padding: 20px;
+      margin-bottom: 15px;
+      border-left: 4px solid var(--primary);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    
+    .medication-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+    
+    .medication-detail {
+      display: flex;
+      margin-bottom: 8px;
+    }
+    
+    .detail-label {
+      font-weight: 500;
+      color: var(--text-light);
+      min-width: 120px;
+    }
+    
+    .detail-value {
+      color: var(--text);
+    }
+    
+    .notes {
+      background-color: var(--primary-light);
+      padding: 10px;
+      border-radius: 6px;
+      margin-top: 10px;
+      font-size: 0.9em;
+    }
+    
+    .medication-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 15px;
+    }
+    
+    .btn {
+      padding: 8px 16px;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+    
+    .btn-primary {
+      background-color: var(--primary);
+      color: white;
+    }
+    
+    .btn-primary:hover {
+      background-color: var(--primary-dark);
+    }
+    
+    .btn-danger {
+      background-color: var(--danger);
+      color: white;
+    }
+    
+    .btn-danger:hover {
+      background-color: #c0392b;
+    }
+    
+    .btn-warning {
+      background-color: var(--warning);
+      color: white;
+    }
+    
+    .btn-warning:hover {
+      background-color: #e67e22;
+    }
+    
+    .empty-state {
+      text-align: center;
+      padding: 30px;
+      color: var(--text-light);
+      font-style: italic;
+    }
+    
+    @media (max-width: 768px) {
+      .dashboard-container {
+        padding: 20px;
+      }
+      
+      .patient-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+      }
+      
+      .medication-actions {
+        flex-wrap: wrap;
+      }
+      
+      .btn {
+        flex: 1;
+        min-width: 100px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="dashboard-container">
+    <div class="logout">
+      <form action="/logout">
+        <button type="submit">Logout</button>
+      </form>
+    </div>
+
+    <!-- Section: Patients List -->
+    <div class="section">
+      {% for patient in patients %}
+        <div class="patient-header">
+          <h2>Medication for {{ patient.name }}</h2>
+          <div class="patient-actions">
+            <form action="/insert">
+              <button type="submit" class="btn btn-primary">Add Medication</button>
+            </form>
+          </div>
+        </div>
+        
+        {% set has_medications = false %}
+        {% for medecine in medecines %}
+          {% if patient.name == medecine.patient %}
+            {% set has_medications = true %}
+            <div class="medication-card">
+              <div class="medication-detail">
+                <span class="detail-label">Medicine Name:</span>
+                <span class="detail-value">{{ medecine.med_name }}</span>
+              </div>
+              <div class="medication-detail">
+                <span class="detail-label">Time:</span>
+                <span class="detail-value">{{ medecine.time }}</span>
+              </div>
+              <div class="medication-detail">
+                <span class="detail-label">Remaining:</span>
+                <span class="detail-value">{{ medecine.rest }}</span>
+              </div>
+              {% if medecine.notes %}
+                <div class="notes">
+                  <strong>Notes:</strong> {{ medecine.notes }}
+                </div>
+              {% endif %}
+              
+              <div class="medication-actions">
+                <form action="/update">
+                  <button type="submit" class="btn btn-warning">Update</button>
+                </form>
+                <form action="/delete">
+                  <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+              </div>
+            </div>
+          {% endif %}
+        {% endfor %}
+        
+        {% if not has_medications %}
+          <div class="empty-state">
+            No medications found for this patient
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</body>
+</html>

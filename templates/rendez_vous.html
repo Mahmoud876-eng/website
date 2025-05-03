@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Book a Rendez-vous</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+            padding: 20px;
+        }
+        .container {
+            max-width: 500px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        button {
+            background: #28a745;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #218838;
+        }
+        h2 {
+            text-align: center;
+        }
+    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/navbar.css') }}">
+</head>
+<body>
+    <nav>
+        <div class="navbar">
+          <div class="nvcontainer nav-container">
+              <input class="checkbox" type="checkbox" name="" id="" />
+              <div class="hamburger-lines">
+                <span class="line line1"></span>
+                <span class="line line2"></span>
+                <span class="line line3"></span>
+              </div>  
+            <div class="nvlogo">
+                <h1>Book a Rendez-vous</h1>
+            </div>
+            <div class="menu-items">
+              <li><a href="/">Home Page</a></li>
+              <li><a href="#">Contact Us</a></li>
+              <li><a href="/logout">log out</a></li>
+            </div>
+          </div>
+        </div>
+      </nav>
+    <div class="container">
+    
+    {% if username %}
+        <form method="POST" action="/rendez_vous/sec">
+    {% else %}
+        <form method="POST" action="/book_rendezvous">
+    {% endif %}
+    
+    
+    
+        <label for="name">Patient name:</label>
+        <input list="browsers" id="browser" name="name" placeholder="Type to search...">
+        <datalist id="browsers">
+            {% for patient in patients %}
+                <option value={{patient.name}}>
+            {% endfor %}
+        </datalist>
+        <label for="Number">Number:</label>
+        <input type="text" id="Number" name="Number" required>
+        <label for="doctor">Doctor name:</label>
+        {% if username: %}
+        <input type="text" id="doctor_name" name="doctor" value="{{ username }}" readonly>
+        {% else: %}
+            <input type="text" id="doctor_name" name="doctor" required>
+        {% endif %}
+        <label for="date">Choose Date:</label>
+        <input type="date" id="date" name="date" min="2025-05-02" required>
+
+        <label for="time">Choose Time:</label>
+        <input type="time" id="time" name="time"  required>
+
+        <label for="notes">Additional Notes (optional):</label>
+        <textarea id="notes" name="notes" rows="4"></textarea>
+       
+        <button type="submit">Book Appointment</button>
+    </form>
+        
+</div>
+</body>
+</html>

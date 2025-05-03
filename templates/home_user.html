@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alzheimer Care - Home</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
+  <style>
+    :root {
+      --primary: #1976d2;
+      --primary-dark: #1565c0;
+      --primary-light: #e3f2fd;
+      --secondary: #4caf50;
+      --accent: #ff9800;
+      --text: #212121;
+      --text-light: #757575;
+      --background: #f5f7fa;
+      --white: #ffffff;
+      --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: var(--background);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    /* Navbar */
+    .navbar {
+      background-color: var(--white);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .nvcontainer {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .menu-items {
+      display: flex;
+      list-style: none;
+      gap: 1.5rem;
+    }
+
+    .menu-items li a {
+      text-decoration: none;
+      color: var(--text);
+      font-weight: 500;
+      transition: color 0.3s;
+      padding: 0.5rem 0;
+    }
+
+    .menu-items li a:hover {
+      color: var(--primary);
+    }
+
+    /* Hero Section */
+    header {
+      background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), 
+                  url('https://www.whiteplainscare.com/wp-content/uploads/2018/07/Services-Dementia-Care-336x222.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      color: var(--white);
+      text-align: center;
+      padding: 8rem 2rem;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    header h1 {
+      font-size: 3rem;
+      margin-bottom: 1.5rem;
+      font-weight: 600;
+    }
+
+    header p {
+      font-size: 1.2rem;
+      max-width: 600px;
+      margin: 0 auto 2.5rem;
+      opacity: 0.9;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 0.8rem 2rem;
+      background-color: var(--white);
+      color: var(--primary);
+      border: none;
+      border-radius: 50px;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.3s;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+      background-color: var(--primary-light);
+    }
+
+    /* Motivational Message */
+    .motivational {
+      text-align: center;
+      padding: 3rem 2rem;
+      background-color: var(--white);
+      font-style: italic;
+      color: var(--text-light);
+      font-size: 1.2rem;
+      border-top: 1px solid var(--primary-light);
+      border-bottom: 1px solid var(--primary-light);
+    }
+
+    /* Sections */
+    .section {
+      padding: 5rem 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section h2 {
+      text-align: center;
+      margin-bottom: 3rem;
+      color: var(--primary);
+      font-size: 2rem;
+      position: relative;
+    }
+
+    .section h2::after {
+      content: "";
+      display: block;
+      width: 80px;
+      height: 4px;
+      background: var(--primary);
+      margin: 1rem auto 0;
+      border-radius: 2px;
+    }
+
+    /* About Section */
+    .about {
+      display: flex;
+      gap: 3rem;
+      align-items: center;
+      background-color: var(--white);
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: var(--card-shadow);
+    }
+
+    .about img {
+      width: 50%;
+      max-width: 500px;
+      border-radius: 8px;
+      object-fit: cover;
+    }
+
+    .about-text {
+      color: var(--text-light);
+      flex: 1;
+      font-size: 1.1rem;
+      line-height: 1.8;
+    }
+
+    /* Features Section */
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .feature-card {
+      background-color: var(--white);
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: var(--card-shadow);
+      transition: all 0.3s ease;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .feature-card h3 {
+      color: var(--primary);
+      margin-bottom: 1rem;
+      font-size: 1.3rem;
+    }
+
+    .feature-card p {
+      color: var(--text-light);
+      margin-bottom: 1.5rem;
+      flex-grow: 1;
+    }
+
+    .feature-card.button-card {
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: all 0.3s;
+    }
+
+    .feature-card.button-card:hover {
+      border-color: var(--primary);
+      background-color: var(--primary-light);
+    }
+
+    .feature-card.button-card form,
+    .feature-card.button-card button {
+      width: 100%;
+      height: 100%;
+      background: none;
+      border: none;
+      padding: 0;
+      margin: 0;
+      cursor: pointer;
+      text-align: left;
+    }
+
+    .feature-card.button-card button {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    /* Testimonials */
+    .testimonials {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .testimonial {
+      background-color: var(--white);
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: var(--card-shadow);
+      position: relative;
+    }
+
+    .testimonial::before {
+      content: "''";
+      font-size: 5rem;
+      color: var(--primary-light);
+      position: absolute;
+      top: -1rem;
+      left: 1rem;
+      line-height: 1;
+      opacity: 0.3;
+    }
+
+    .testimonial p {
+      color: var(--text-light);
+      margin-bottom: 1rem;
+      font-style: italic;
+      position: relative;
+      z-index: 1;
+    }
+
+    .testimonial .author {
+      color: var(--primary);
+      font-weight: 600;
+      text-align: right;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 2rem;
+      background-color: var(--white);
+      box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+      color: var(--text-light);
+      margin-top: 3rem;
+    }
+
+    footer a {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+
+    footer a:hover {
+      color: var(--primary-dark);
+      text-decoration: underline;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      header h1 {
+        font-size: 2.2rem;
+      }
+
+      header p {
+        font-size: 1rem;
+      }
+
+      .about {
+        flex-direction: column;
+      }
+
+      .about img {
+        width: 100%;
+      }
+
+      .section {
+        padding: 3rem 1.5rem;
+      }
+
+      .menu-items {
+        display: none;
+      }
+
+      .hamburger-lines {
+        display: block;
+      }
+    }
+
+    /* Hamburger menu styles would go here */
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="nvcontainer nav-container">
+      <div class="nvlogo">
+        <h1>Alzheimer Care</h1>
+      </div>
+      <div class="menu-items">
+        <li><a href="/">Home Page</a></li>
+        <li><a href="#">Contact Us</a></li>
+        <li><a href="/logout">Log Out</a></li>
+      </div>
+    </div>
+  </nav>
+  
+  <!-- Hero Section -->
+  <header>
+    <h1>Welcome, {{ username }} 👋</h1>
+    <p>We're glad you're here. Let's keep making life easier — for you and your loved ones.</p>
+    <form action="/view">
+      <button type="submit" class="btn">Go to Dashboard</button>
+    </form>
+  </header>
+
+  <!-- Motivational Message -->
+  <section class="motivational">
+    "Your health is their happiness. Stay consistent—for them, they are the ones who truly matter."
+  </section>
+
+  <!-- About Section -->
+  <section class="section">
+    <h2>About Your Platform</h2>
+    <div class="about">
+      <img src="static/img/dsupport.jpg" alt="Caregiver supporting elderly person">
+      <div class="about-text">
+        Welcome to your personal Alzheimer Care system, {{ username }}. This platform helps you track medications, 
+        set reminders, and maintain connections between caregivers and loved ones. Our intuitive design makes 
+        daily care management simpler and more effective.
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="section">
+    <h2>Your Care Tools</h2>
+    <div class="features">
+      <div class="feature-card button-card">
+        <form action="/insert">
+          <button>
+            <h3>Add New Medication</h3>
+            <p>Track and organize medications with custom dosages, schedules, and important notes.</p>
+          </button>
+        </form>
+      </div>
+      <div class="feature-card button-card">
+        <form action="/delete">
+          <button>
+            <h3>Remove Medication</h3>
+            <p>Discontinue medications that are no longer needed from the care plan.</p>
+          </button>
+        </form>
+      </div>
+      <div class="feature-card button-card">
+        <form action="/register/patient">
+          <button>
+            <h3>Add Patient Profile</h3>
+            <p>Create comprehensive profiles for each individual under your care.</p>
+          </button>
+        </form>
+      </div>
+      <div class="feature-card button-card">
+        <form action="/update">
+          <button>
+            <h3>Update Medications</h3>
+            <p>Adjust dosages, schedules, or other details as treatment plans evolve.</p>
+          </button>
+        </form>  
+      </div>
+      <div class="feature-card button-card">
+        <form action="/book_rendezvous">
+          <button>
+            <h3>Schedule Appointments</h3>
+            <p>Coordinate medical visits and important care-related meetings.</p>
+          </button>
+        </form>
+      </div>
+      <div class="feature-card button-card">
+        <form action="/view">
+          <button>
+            <h3>View Full Dashboard</h3>
+            <p>Access all care management tools and information in one place.</p>
+          </button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section class="section">
+    <h2>Caregiver Stories</h2>
+    <div class="testimonials">
+      <div class="testimonial">
+        <p>This system transformed how we manage my mother's care. Medication errors dropped to zero and our whole family feels more connected to her care team.</p>
+        <div class="author">– Sarah M., Daughter</div>
+      </div>
+      <div class="testimonial">
+        <p>As someone living with early-stage Alzheimer's, this platform gives me confidence that my medications are being managed correctly even when I forget.</p>
+        <div class="author">– Jamal K., Patient</div>
+      </div>
+      <div class="testimonial">
+        <p>The peace of mind knowing there's a digital safety net for my husband's medications is priceless. The reminders help us both stay on track.</p>
+        <div class="author">– Laila F., Spouse</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    &copy; 2025 Alzheimer Care | Need help? Contact us at <a href="mailto:support@alzcare.org">support@alzcare.org</a>
+    <p style="margin-top: 0.5rem; font-size: 0.9rem;">Compassionate care through technology</p>
+  </footer>
+</body>
+</html>

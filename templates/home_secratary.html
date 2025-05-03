@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Secretary Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/hom_d.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/navbar.css') }}">
+</head>
+<body>
+    <nav>
+        <div class="navbar">
+          <div class="nvcontainer nav-container">
+              <input class="checkbox" type="checkbox" name="" id="" />
+              <div class="hamburger-lines">
+                <span class="line line1"></span>
+                <span class="line line2"></span>
+                <span class="line line3"></span>
+              </div>  
+            <div class="nvlogo">
+              <h1>HOPE</h1>
+            </div>
+            <div class="menu-items">
+              <li><a href="/look">Dashboard</a></li>
+              <li><a href="/">Profile</a></li>
+              <li><a href="/logout">Logout</a></li>
+            </div>
+          </div>
+        </div>
+    </nav>
+   
+    <header>
+        <h1>Welcome, Secretary{{ username }} </h1>
+        <p>Your role is essential in ensuring everything runs smoothly.</p>
+        <a href="/view/ren" class="btn">appointment not aprroved</a>
+    </header>
+
+    <div class="motivational">
+        “Behind every great doctor is a brilliant secretary making it all possible.”
+    </div>
+
+    <section class="section">
+        <h2>Quick Actions</h2>
+        <div class="features">
+            <div class="feature-card button-card">
+                <form action="/register/patient" method="get">
+                    <button type="submit">
+                        <h3>Add Patient</h3>
+                        <p>Register new patients into the system.</p>
+                    </button>
+                </form>
+            </div>
+            <div class="feature-card button-card">
+                <form action="/rendez_vous/sec" method="get">
+                    <button type="submit">
+                        <h3>Schedule Appointment</h3>
+                        <p>Manage and book appointment times.</p>
+                    </button>
+                </form>
+            </div>
+            <div class="feature-card button-card">
+                <form action="/send_reminder" method="get">
+                    <button type="submit">
+                        <h3>Send Reminder</h3>
+                        <p>Notify patients about upcoming visits or medication.</p>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 MediCare System. Made with ❤️</p>
+        <a href="#">Privacy Policy</a> | <a href="#">Contact Support</a>
+    </footer>
+
+</body>
+</html>
